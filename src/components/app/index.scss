@@ -1,0 +1,33 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+#root {
+	min-height: 100vh;
+	display: grid;
+	grid-template-areas:
+		'header header'
+		'sidebar main'
+		'footer footer';
+	grid-template-rows: 60px 1fr 60px;
+	grid-template-columns: 100px 1fr;
+	.header,
+	.sidebar,
+	.main,
+	.footer {
+		background-color: gold;
+		padding: 20px;
+	}
+	.header {
+		grid-area: header;
+	}
+	.sidebar {
+		grid-area: sidebar;
+	}
+	.main {
+		grid-area: main;
+	}
+	.footer {
+		grid-area: footer;
+	}
+}
