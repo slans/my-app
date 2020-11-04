@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
+import Clock from '../clock/clock';
 
-interface MyProps {
-	children: any;
-}
+interface MyProps {}
 interface AppState {
-	clickAmount: number;
+	time: Date;
 }
 
 export default class App extends Component<MyProps, AppState> {
 	state = {
-		clickAmount: 1,
+		time: new Date(),
 	};
 
-	handleClick = () => {
-		this.setState(({ clickAmount }) => ({
-			clickAmount: ++clickAmount,
-		}));
+	changeTime = () => {
+		setInterval(() => {
+			this.setState({ time: new Date() });
+		}, 1000);
 	};
 
 	render() {
-		return (
-			<>
-				<div>{this.props.children}</div>
-				<span onClick={this.handleClick}>Click</span>
-			</>
-		);
+		const { time } = this.state;
+		this.changeTime();
+		return <Clock time={time} />;
 	}
 }
