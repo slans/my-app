@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './app.scss';
-import Main from '../main';
-import Header from '../header';
-import Sidebar from '../sidebar';
-import Footer from '../footer';
+import Main from '../main/main';
+import Header from '../header/header';
+import Sidebar from '../sidebar/sidebar';
+import Footer from '../footer/footer';
 import Utils from '../../utils/utils';
 
 const utils = new Utils();
