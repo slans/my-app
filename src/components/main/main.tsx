@@ -1,43 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
+import API from '../../api/api';
+import { Todo } from '../app/model';
 
-interface PropsMain {
-	activeClass: number;
-	onBtnClick: (num: number) => void;
-	numbers: Array<number>;
-	onDeleteNumber: (num: number) => void;
-	onAddNumber: (num: number) => void;
+const api = new API();
+interface MainState {
+	todos: Array<Todo> | [];
 }
-
-function Main(props: PropsMain) {
-	const { activeClass, onBtnClick, numbers, onDeleteNumber, onAddNumber } = props;
-
-	const btnsArr = [
-		{ label: 'Кликни', id: 1 },
-		{ label: 'Нажми', id: 2 },
-		{ label: 'Надави', id: 3 },
-	];
-
-	const btnsFunc = (item: any) => {
-		const clazz = activeClass === item.id ? 'active' : '';
-		return (
-			<button key={item.id} className={clazz} onClick={() => onBtnClick(item.id)}>
-				{item.label}
-			</button>
-		);
+class Main extends Component<{}, MainState> {
+	state = {
+		todos: [] as Array<Todo>,
 	};
 
-	const btnsElements = btnsArr.map(btnsFunc);
+	async componentDidMount() {
+		const todos: Array<Todo> = await api.getTodos();
 
-	return (
-		<div className='main'>
-			{btnsElements}
-			<div>Numbers: {numbers}</div>
-			<div>
-				<button onClick={() => onDeleteNumber(6)}>Delete number</button>
-				<button onClick={() => onAddNumber(7)}>Add number</button>
-			</div>
-		</div>
-	);
+		this.setState({ todos });
+	}
+
+	getTodosElementsByUserId = (userId: number) => {
+		const { todos } = this.state;
+		const elementsTodos = todos
+			.filter((item) => item.userId === userId)
+			.map((item) => {
+				return (
+					<div className='todo-item' key={item.id}>
+						<span>UserId: {item.userId}</span>
+						<span>Id: {item.id}</span>
+						<span>Title: {item.title}</span>
+					</div>
+				);
+			});
+		return elementsTodos;
+	};
+
+	render() {
+		const { todos } = this.state;
+		return <div className='main'>{todos.length && this.getTodosElementsByUserId(1)}</div>;
+	}
 }
 
 export default Main;
