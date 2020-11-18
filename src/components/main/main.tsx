@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from '../../api/api';
 import { Todo } from '../app/model';
+import TempCalculator from '../temp-calculator/temp-calculator';
 
 const api = new API();
 interface MainState {
@@ -35,7 +36,12 @@ class Main extends Component<{}, MainState> {
 
 	render() {
 		const { todos } = this.state;
-		return <div className='main'>{todos.length && this.getTodosElementsByUserId(1)}</div>;
+		return (
+			<div className='main'>
+				{todos.length && this.getTodosElementsByUserId(1)}
+				<TempCalculator />
+			</div>
+		);
 	}
 }
 
