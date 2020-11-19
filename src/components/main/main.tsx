@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from '../../api/api';
 import { Todo } from '../../utils/model';
+import ProductsFilterable from '../products-filtarable/products-filtarable';
 import TempCalculator from '../temp-calculator/temp-calculator';
 
 const api = new API();
@@ -40,7 +41,7 @@ class Main extends Component<{}, MainState> {
 			<div className='main'>
 				{todos.length && this.getTodosElementsByUserId(1)}
 				<TempCalculator />
-				{/* <ProductsFilterable /> */}
+				<ProductsFilterable />
 			</div>
 		);
 	}
