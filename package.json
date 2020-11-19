@@ -42,6 +42,8 @@
 	},
 	"devDependencies": {
 		"@types/react": "^16.9.55",
-		"axios": "^0.21.0"
+		"axios": "^0.21.0",
+		"bootstrap": "^4.5.3",
+		"reactstrap": "^8.7.1"
 	}
 }
