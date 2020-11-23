@@ -3,18 +3,16 @@ import API from '../../api/api';
 import { Todo } from '../../utils/model';
 import ProductsFilterable from '../products-filtarable/products-filtarable';
 import TempCalculator from '../temp-calculator/temp-calculator';
-
-const api = new API();
 interface MainState {
 	todos: Array<Todo> | [];
 }
-class Main extends Component<{}, MainState> {
+class Main extends Component<{ children: any }, MainState> {
 	state = {
 		todos: [] as Array<Todo>,
 	};
 
 	async componentDidMount() {
-		const todos: Array<Todo> = await api.getTodos();
+		const todos: Array<Todo> = await API.getTodos();
 
 		this.setState({ todos });
 	}
@@ -37,11 +35,13 @@ class Main extends Component<{}, MainState> {
 
 	render() {
 		const { todos } = this.state;
+		const { children } = this.props;
 		return (
 			<div className='main'>
-				{todos.length && this.getTodosElementsByUserId(1)}
+				{children}
+				{/* {todos.length && this.getTodosElementsByUserId(1)}
 				<TempCalculator />
-				<ProductsFilterable />
+				<ProductsFilterable /> */}
 			</div>
 		);
 	}

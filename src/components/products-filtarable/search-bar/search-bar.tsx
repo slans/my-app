@@ -1,15 +1,36 @@
 import React from 'react';
 import { FormGroup, Input, Label } from 'reactstrap';
 
-function SearchBar() {
+interface PropsSearchBar {
+	search: string;
+	stocked: boolean;
+	onChangeSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onChangeStocked: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+function SearchBar(props: PropsSearchBar) {
+	const { search, stocked, onChangeSearch, onChangeStocked } = props;
 	return (
 		<>
 			<FormGroup>
 				<Label for='searchProduct'>Поиск</Label>
-				<Input type='text' name='searchProduct' id='searchProduct' placeholder='Введите текст' />
+				<Input
+					type='text'
+					value={search}
+					onChange={onChangeSearch}
+					name='searchProduct'
+					id='searchProduct'
+					placeholder='Поиск по продуктам'
+				/>
 			</FormGroup>
 			<FormGroup check>
-				<Input type='checkbox' name='check' id='exampleCheck' />
+				<Input
+					type='checkbox'
+					checked={stocked}
+					onChange={onChangeStocked}
+					name='check'
+					id='exampleCheck'
+				/>
 				<Label for='exampleCheck' check>
 					Only show products in stock
 				</Label>

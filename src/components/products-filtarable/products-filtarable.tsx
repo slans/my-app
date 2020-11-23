@@ -5,7 +5,6 @@ import { Products } from '../../utils/model';
 import ProductTable from './products-table/products-table';
 import SearchBar from './search-bar/search-bar';
 
-const api = new API();
 interface StateProductsFilterable {
 	search: string;
 	stocked: boolean;
@@ -23,27 +22,50 @@ export class ProductsFilterable extends Component<{}, StateProductsFilterable> {
 
 	async componentDidMount() {
 		this.setState({ loading: true });
-		const products = await api.getProducts();
+		const products = await API.getProducts();
 		this.setState({
 			loading: false,
 			products,
 		});
 	}
 
-	render() {
-		const { loading, products } = this.state;
-		if (loading) return <Spinner color='primary' />;
+	handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		this.setState({ search: value });
+	};
 
+	handleChangeStocked = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { checked } = e.target;
+		this.setState({ stocked: checked });
+	};
+
+	filterOnSearch = (products: Products[], search: string) => {
+		return products.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+	};
+
+	filterOnStocked = (products: Products[]) => {
+		return products.filter((item) => item.stocked);
+	};
+
+	render() {
+		const { search, stocked, loading, products } = this.state;
+		if (loading) return <Spinner color='primary' />;
 		if (products.length) {
+			let filteredProducts = search ? this.filterOnSearch(products, search) : products;
+			filteredProducts = stocked ? this.filterOnStocked(filteredProducts) : filteredProducts;
+
 			return (
-				<>
-					<Row>
-						<Col lg='3'>
-							<SearchBar />
-							<ProductTable products={products} />
-						</Col>
-					</Row>
-				</>
+				<Row>
+					<Col lg='3'>
+						<SearchBar
+							onChangeSearch={this.handleSearch}
+							search={search}
+							onChangeStocked={this.handleChangeStocked}
+							stocked={stocked}
+						/>
+						<ProductTable products={filteredProducts} />
+					</Col>
+				</Row>
 			);
 		}
 

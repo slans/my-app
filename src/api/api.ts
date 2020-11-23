@@ -21,7 +21,7 @@ class API {
 				return response.data;
 			}
 		} catch (err) {
-			console.log('err', err.response);
+			console.error(err.response);
 		}
 	};
 
@@ -39,4 +39,4 @@ function timeout(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export default API;
+export default new API();
