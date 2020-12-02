@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Todo } from '../utils/model';
 
 const api = axios.create({
 	baseURL: 'https://jsonplaceholder.typicode.com/',
@@ -24,6 +25,28 @@ class API {
 			console.error(err.response);
 		}
 	};
+
+	getProducts = async () => {
+		try {
+			await timeout(1000);
+			return products;
+		} catch (error) {
+			return [];
+		}
+	};
+
+	getTodosByUserId = async (userId: number) => {
+		try {
+			const response: Todo[] = await this.getTodos();
+			return response.filter((item) => item.userId === userId);
+		} catch (error) {
+			console.error(error.response);
+		}
+	};
+}
+
+function timeout(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export default new API();
